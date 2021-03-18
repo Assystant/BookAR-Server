@@ -9,7 +9,7 @@ dist/
 
 # Compiled Java class files
 *.class
-
+*
 # Compiled Python bytecode
 *.py[cod]
 
@@ -48,3 +48,5 @@ Thumbs.db
 *.mov
 *.wmv
 
+#Django Database
+db.sqlite3
