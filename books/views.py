@@ -20,6 +20,6 @@ class BookViewSet(viewsets.GenericViewSet,ListModelMixin,CreateModelMixin, Retri
 class PhraseViewSet(viewsets.GenericViewSet,ListModelMixin,CreateModelMixin, RetrieveModelMixin, UpdateModelMixin):
     serializer_class = PhraseSerializer
     queryset = PhrasesModel.objects.all()
-    #ARB -4
+    
     filter_backends = [filters.SearchFilter]
     search_fields = ['phrase']
