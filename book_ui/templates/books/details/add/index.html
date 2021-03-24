@@ -22,7 +22,7 @@
 
     <!-- Main content -->
     <section class="content">
-      <form action="" enctype = "multipart/form-data" method = "POST">{% csrf_token %}
+      <form action="/book-ui/{{book.id}}/phrase-list/" enctype = "multipart/form-data" method = "POST">{% csrf_token %}
       <div class="row">
         <div class="col-md-12">
           <div class="card card-primary">
@@ -50,22 +50,16 @@
                 </div>
               <div class="form-group">
                   <label for="id_publisher">Book</label>
-                  <select class="form-control custom-select" name="book" id="id_publisher">
-                      <option selected disabled>Select one</option>
-                        {% for book in books %}
-                      <!-- <option>On Hold</option> -->
-                          <option  value ="{{ book.id }}">{{ book.name }}</option>
-                        {% endfor %}
-                    </select>
+                <input type="text"   name="book" class="form-control" value="{{ book.id }}" readonly>
                 </div>
-<!--                <div class="form-group">-->
-<!--                  <label for="customFile">3D Model/ Image/ Video</label>-->
+                <div class="form-group">
+                  <label for="customFile">3D Model/ .obj/ .fbx</label>
 
-<!--                  <div class="custom-file">-->
-<!--                    <input type="file" class="custom-file-input" id="customFile">-->
-<!--                    <label class="custom-file-label" for="customFile">Choose file</label>-->
-<!--                  </div>-->
-<!--                </div>-->
+                  <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="customFile" name="object">
+                    <label class="custom-file-label" for="customFile">Choose file</label>
+                  </div>
+                </div>
 
             </div>
             <!-- /.card-body -->
@@ -75,12 +69,11 @@
       </div>
       <div class="row mb-4">
         <div class="col-12">
-          <a href="" class="btn btn-secondary">Cancel</a>
+          <a href="/book-ui/{{book.id}}/phrase-list/" class="btn btn-secondary">Cancel</a>
           <input type="submit" value="Add Phrase" class="btn btn-success float-right">
         </div>
       </div>
       </form>
     </section>
-
     <!-- /.content -->
 {% endblock body %}

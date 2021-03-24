@@ -13,10 +13,10 @@ urlpatterns = [
     path('book-view/<pk>/',views.viewbook,name='ui-book-list'),
 
     #Phrases URL
-    path('phraseform/',views.phraseform,name='phraseform'),#ADD A Phrase
-    path('phrase-list/', views.listphrase, name='ui-phrase-list'),  # LIST Phrase
+    path('<bookid>/phraseform/',views.phraseform,name='phraseform'),#ADD A Phrase
+    path('<bookid>/phrase-list/', views.listphrase, name='ui-phrase-list'),  # LIST Phrase
     path('phrase-list/<pk>/', views.listphrase, name='ui-phrase-delete'),  # DELETE A BOOK
-    path('phrase-edit/<pk>/', views.editphrase, name='ui-phrase-edit'),
+    path('<bookid>/phrase-edit/<pk>/', views.editphrase, name='ui-phrase-edit'),
     # path('phrase-view/<pk>/', views.viewphrase, name='ui-phrase-list'),
 
 ]

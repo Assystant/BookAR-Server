@@ -7,7 +7,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6 d-flex align-items-center">
-            <h1>Book Detail </h1>
+            <h1>Phrase Detail </h1>
             <!-- <a href="add/" class="btn btn-sm btn-circle btn-primary btn-fab ml-3"><i class="fa fa-plus"></i></a> -->
 
           </div>
@@ -32,7 +32,7 @@
                     <div class="card-header">
                     <h3 class="card-title">AR Content</h3>
                     <div class="card-tools">
-                        <a href="/book-ui/phraseform/" type="button" class="btn btn-tool" data-toggle="tooltip" title="Add content">
+                        <a href="/book-ui/{{ bookid }}/phraseform/" type="button" class="btn btn-tool" data-toggle="tooltip" title="Add content">
                         <i class="fas fa-plus"></i></a>
                     </div>
                     <!-- <div class="card-tools">
@@ -83,7 +83,7 @@
                                             </i>
                                             Download Model
                                         </a>
-                                        <a class="btn btn-info btn-sm" href="/book-ui/phrase-edit/{{ phrase.id }}"/>
+                                        <a class="btn btn-info btn-sm" href="/book-ui/{{ phrase.book }}/phrase-edit/{{ phrase.id }}"/>
                                             <i class="fas fa-pencil-alt">
                                             </i>
                                             Edit

@@ -78,7 +78,9 @@ class PhrasesModel(TimeStampedModel):
         "Status Type", choices=STATUS_CHOICES, max_length=10,default=STATUS_ACTIVE)
     phrase = models.CharField(max_length=100)
     book = models.ForeignKey(BookModel, on_delete=models.CASCADE,related_name="phrases", null=True, blank=True)
-
+    object = models.FileField(upload_to='3dObjects/')
+                              # validators=[FileExtensionValidator(allowed_extensions=['obj', 'fbx'])])#it might cause
+                                                                                                    #issues with serializers
     def __str__(self):
         return str(self.phrase)
 

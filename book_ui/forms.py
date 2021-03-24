@@ -25,7 +25,7 @@ class Demoform(ModelForm):
 class PhraseForm(ModelForm):
     class Meta:
         model = PhrasesModel
-        fields = ['phrase','book','status']
+        fields = ['phrase','book','object','status']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -37,6 +37,9 @@ class PhraseForm(ModelForm):
         )
         self.fields["book"].widget.attrs.update(
             {"placeholder": "Book", "class": "form-control"}
+        )
+        self.fields["object"].widget.attrs.update(
+            {"placeholder": "3dObject", "class": "form-control"}
         )
 
 

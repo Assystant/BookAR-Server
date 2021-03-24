@@ -34,7 +34,7 @@
               </div>
             </div>
             <div class="card-body">
-              <form action="" method="POST" autocomplete="off" class="" enctype="multipart/form-data">
+            <form action="" method="POST" autocomplete="off" class="" enctype="multipart/form-data">
                   {% csrf_token %} {% for field in form %}
                   <div class="form-group">
                       <label for="{{ field.auto_id }}">{{ field.label_tag }}</label>

@@ -10,6 +10,13 @@ from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import redirect
 from django.urls import reverse
 
+
+def handle_uploaded_file(f):
+    with open('3dObjects/'+f.name, 'wb+') as destination:
+        for chunk in f.chunks():
+            destination.write(chunk)
+
+
 @renderer_classes([JSONRenderer])
 # @api_view(['GET', 'POST', 'DELETE'])
 @csrf_exempt
@@ -33,7 +40,7 @@ def editbook(request,pk=None):
     if request.method == 'POST':
         if form.is_valid():
             form.save()
-            return JsonResponse({"status":True,"message":"Book Successfully Edited"})
+            return redirect("/book-ui/books-list/")
     else:
         return JsonResponse({"status": False, "message": "Invalid Request"})
 
@@ -72,7 +79,7 @@ def bookform(request):
             print('valid form')
             form.save()
             #return  render(request,'demoform.html')
-            return Response({'status':"Done"})
+            return redirect("/book-ui/books-list/")
         return Response({'status':"Invalid"})
     else:
         authors = AuthorModel.objects.all().order_by('name')
@@ -85,27 +92,43 @@ def bookform(request):
 @renderer_classes([JSONRenderer])
 # @api_view(['GET', 'POST', 'DELETE'])
 @csrf_exempt
-def listphrase(request,pk=None):
+def listphrase(request,pk=None,bookid=None):
     if request.method == 'GET':
-        phrases= PhrasesModel.objects.all()
-        return render(request, "books/details/index.html",{"phrases":phrases})
+        phrases= PhrasesModel.objects.filter(book__pk=bookid)
+        return render(request, "books/details/index.html",{"phrases":phrases,"bookid":bookid})
     if request.method == 'DELETE':
         if PhrasesModel.objects.filter(pk=pk).delete():
             print("Object Found")
             return JsonResponse({"status":True,"message":"Book Successfully Deleted"})
+
     else:
-        return JsonResponse({"status": False, "message": "Invalid Request"})
+        try :
+            form = PhraseForm(request.POST or None, request.FILES)
+            print("clear Form", form.is_valid())
+            if form.is_valid():
+                print("equest.FILES",request.FILES)
+                print("request.FILES", request.POST)
+                if request.FILES['object']:
+                    handle_uploaded_file(request.FILES['object'])
+                form.save()
+                return redirect("/book-ui/{}/phrase-list/".format(bookid))
+        except:
+            return JsonResponse({"status": False, "message": "Invalid Request"})
 
 
-def editphrase(request,pk=None):
+def editphrase(request,pk=None,bookid=None):
     phrase = PhrasesModel.objects.get(pk=pk)
-    form = PhraseForm(request.POST or None, instance=phrase)
     if request.method == 'GET':
-        return render(request, "books/details/edit/index.html",{"form":form})
+        form = PhraseForm(instance=phrase)
+        return render(request, "books/details/edit/index.html",{"form":form,"phrase":phrase})
     if request.method == 'POST':
+        print("bookid",bookid)
+        form = PhraseForm(request.POST or None, request.FILES, instance=phrase)
         if form.is_valid():
+            if request.FILES['object']:
+                handle_uploaded_file(request.FILES['object'])
             form.save()
-            return JsonResponse({"status":True,"message":"Book Successfully Edited"})
+            return redirect("/book-ui/{}/phrase-list/".format(bookid))
     else:
         return JsonResponse({"status": False, "message": "Invalid Request"})
 
@@ -122,15 +145,19 @@ def editphrase(request,pk=None):
 
 @api_view(('GET','POST'))
 @renderer_classes([JSONRenderer])
-def phraseform(request):
-    form = PhraseForm(request.POST or None)
+def phraseform(request,bookid=None):
+    book = BookModel.objects.get(pk=bookid)
+    form = PhraseForm(request.POST or None,request.FILES)
+    print("book",book)
     if request.method == 'POST':
+        print("clear Form",form)
         if form.is_valid():
-            print('valid form')
+            if request.FILES['object']:
+                handle_uploaded_file(request.FILES['object'])
             form.save()
             #return  render(request,'demoform.html')
-            return redirect("/book-ui/phrase-list/")
+            return redirect("/book-ui/{}/phrase-list/".format(bookid))
         return Response({'status':"Invalid"})
     else:
-        books = BookModel.objects.all().order_by('name')
-        return  render(request,'books/details/add/index.html',{"books":books,"form":form})
+        print(vars(book))
+        return  render(request,'books/details/add/index.html',{"book":book,"form":form})
