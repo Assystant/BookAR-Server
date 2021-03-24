@@ -1,0 +1,86 @@
+{% extends "root.html" %}
+{% block body %}
+
+    <!-- Content Header (Page header) -->
+    <section class="content-header pt-4">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Phrase Add</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item"><a href="#">Book</a></li>
+              <li class="breadcrumb-item"><a href="#">Book 1</a></li>
+              <li class="breadcrumb-item active">Add Phrase</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <form action="" enctype = "multipart/form-data" method = "POST">{% csrf_token %}
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">Phrase Details</h3>
+              <div class="card-tools">
+                <!-- <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                  <i class="fas fa-minus"></i></button> -->
+              </div>
+            </div>
+            <div class="card-body">
+
+                <div class="form-group">
+                  <label for="inputName">Phrase</label>
+                  <input type="text" id="inputName"  name = "phrase" class="form-control" value="">
+                </div>
+                <div class="form-group">
+                  <label for="inputStatus">Status</label>
+                  <select class="form-control custom-select"  name="status" id="id_status">
+                    <option selected disabled>Select one</option>
+                    <!-- <option>On Hold</option> -->
+                    <option value="active" selected>Active</option>
+                    <option value="inactive">Inactive</option>
+                  </select>
+                </div>
+              <div class="form-group">
+                  <label for="id_publisher">Book</label>
+                  <select class="form-control custom-select" name="book" id="id_publisher">
+                      <option selected disabled>Select one</option>
+                        {% for book in books %}
+                      <!-- <option>On Hold</option> -->
+                          <option  value ="{{ book.id }}">{{ book.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+<!--                <div class="form-group">-->
+<!--                  <label for="customFile">3D Model/ Image/ Video</label>-->
+
+<!--                  <div class="custom-file">-->
+<!--                    <input type="file" class="custom-file-input" id="customFile">-->
+<!--                    <label class="custom-file-label" for="customFile">Choose file</label>-->
+<!--                  </div>-->
+<!--                </div>-->
+
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+      </div>
+      <div class="row mb-4">
+        <div class="col-12">
+          <a href="" class="btn btn-secondary">Cancel</a>
+          <input type="submit" value="Add Phrase" class="btn btn-success float-right">
+        </div>
+      </div>
+      </form>
+    </section>
+
+    <!-- /.content -->
+{% endblock body %}
