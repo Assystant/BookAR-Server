@@ -120,7 +120,8 @@ def editphrase(request,pk=None,bookid=None):
     phrase = PhrasesModel.objects.get(pk=pk)
     if request.method == 'GET':
         form = PhraseForm(instance=phrase)
-        return render(request, "books/details/edit/index.html",{"form":form,"phrase":phrase})
+        print("BOOKID",bookid)
+        return render(request, "books/details/edit/index.html",{"form":form,"phrase":phrase,"bookid":bookid})
     if request.method == 'POST':
         print("bookid",bookid)
         form = PhraseForm(request.POST or None, request.FILES, instance=phrase)
