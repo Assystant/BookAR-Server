@@ -39,7 +39,7 @@ class PhraseForm(ModelForm):
             {"placeholder": "Book", "class": "form-control"}
         )
         self.fields["object"].widget.attrs.update(
-            {"placeholder": "3dObject", "class": "form-control"}
+            {"placeholder": "3dObject", "class": "form-control","required":"false"}
         )
 
 
