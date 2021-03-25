@@ -17,6 +17,13 @@ urlpatterns = [
     path('<bookid>/phrase-list/', views.listphrase, name='ui-phrase-list'),  # LIST Phrase
     path('phrase-list/<pk>/', views.listphrase, name='ui-phrase-delete'),  # DELETE A BOOK
     path('<bookid>/phrase-edit/<pk>/', views.editphrase, name='ui-phrase-edit'),
+    path('3dObjects/<filename>/', views.download, name='ui-phrase-download'),#download
+
+
+    #Publisher
+    path('publisherform/',views.publisherform,name='publisherform'),#ADD A Phrase
+    path('publisher-edit/<pk>/',views.editpublisher,name='ui-book-publisher-edit'),
+    path('publisher-list/',views.listpublishers,name='ui-book-publisher-list'),#LIST A BOOK
     # path('phrase-view/<pk>/', views.viewphrase, name='ui-phrase-list'),
 
 ]

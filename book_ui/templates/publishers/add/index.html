@@ -1,20 +1,19 @@
 {% extends "root.html" %}
 {% block body %}
 
-
-
     <!-- Content Header (Page header) -->
     <section class="content-header pt-4">
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Publisher Add</h1>
+            <h1>Phrase Add</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item"><a href="#">Publisher</a></li>
-              <li class="breadcrumb-item active">Add</li>
+              <li class="breadcrumb-item"><a href="#">Book</a></li>
+              <li class="breadcrumb-item"><a href="#">Book 1</a></li>
+              <li class="breadcrumb-item active">Add Phrase</li>
             </ol>
           </div>
         </div>
@@ -23,6 +22,7 @@
 
     <!-- Main content -->
     <section class="content">
+      <form action="/book-ui/publisherform/" enctype = "multipart/form-data" method = "POST">{% csrf_token %}
       <div class="row">
         <div class="col-md-12">
           <div class="card card-primary">
@@ -34,10 +34,15 @@
               </div>
             </div>
             <div class="card-body">
-              <div class="form-group">
-                <label for="inputName">Publisher Name</label>
-                <input type="text" id="inputName" class="form-control" value="">
-              </div>
+                <div class="form-group">
+                  <label for="inputName">publisher Name</label>
+                  <input type="text"  name="name" maxlength="100" required id="id_name" class="form-control" value="">
+                </div>
+                <div class="form-group">
+                  <label for="inputDescription">Publisher Description</label>
+                  <textarea id="inputDescription" class="form-control" rows="4" name="descripton" required id="id_description"></textarea>
+                </div>
+
             </div>
             <!-- /.card-body -->
           </div>
@@ -46,10 +51,11 @@
       </div>
       <div class="row mb-4">
         <div class="col-12">
-          <a href="#" class="btn btn-secondary">Cancel</a>
-          <input type="submit" value="Add Publisher" class="btn btn-success float-right">
+          <a href="/book-ui/{{bookid}}/phrase-list/" class="btn btn-secondary">Cancel</a>
+          <input type="submit" value="Add Phrase" class="btn btn-success float-right">
         </div>
       </div>
+      </form>
     </section>
     <!-- /.content -->
- {% endblock body %}
+{% endblock body %}

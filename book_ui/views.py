@@ -1,13 +1,15 @@
 from django.shortcuts import render
 from rest_framework.response import Response
 # Create your views here.
-from .forms import Demoform, BookForm, PhraseForm
+from .forms import Demoform, BookForm, PhraseForm, PublisherForm
 from book_api.models import AuthorModel, PublisherModel, BookModel,PhrasesModel
 from rest_framework.decorators import api_view, renderer_classes
 from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import redirect
+from django.views.static import serve
+from config import settings
 from django.urls import reverse
 
 
@@ -94,9 +96,14 @@ def bookform(request):
 @csrf_exempt
 def listphrase(request,pk=None,bookid=None):
     if request.method == 'GET':
-        print("bookid",bookid)
+        book = BookModel.objects.get(pk=bookid)
+        print("bookdata",book.description)
+        import os
+        from config import settings
+        print("directory",settings.MEDIA_ROOT)
         phrases= PhrasesModel.objects.filter(book__pk=bookid)
-        return render(request, "books/details/index.html",{"phrases":phrases,"bookid":bookid})
+        # phras = PhrasesModel.objects.get(pk=35)
+        return render(request, "books/details/index.html",{"phrases":phrases,"bookid":bookid,"book":book,"download":settings.MEDIA_ROOT})
     if request.method == 'DELETE':
         if PhrasesModel.objects.filter(pk=pk).delete():
             print("Object Found")
@@ -150,7 +157,6 @@ def editphrase(request,pk=None,bookid=None):
 def phraseform(request,bookid=None):
     book = BookModel.objects.get(pk=bookid)
     form = PhraseForm(request.POST or None,request.FILES)
-    print("book",book)
     if request.method == 'POST':
         print("clear Form",form)
         if form.is_valid():
@@ -163,3 +169,56 @@ def phraseform(request,bookid=None):
     else:
         print(vars(book))
         return  render(request,'books/details/add/index.html',{"book":book,"form":form})
+
+
+###############################################    publisher     ####################################################
+
+@api_view(('GET','POST'))
+@renderer_classes([JSONRenderer])
+def publisherform(request):
+    form = PublisherForm(request.POST or None)
+    if request.method == 'POST':
+        print("clear Form",form)
+        if form.is_valid():
+            form.save()
+            #return  render(request,'demoform.html')
+            # return redirect("pub")
+            return Response({'status': "Done"})
+        return Response({'status':"Invalid"})
+    else:
+        return  render(request,'publishers/add/index.html',{"form":form})
+
+@api_view(('GET','POST'))
+def editpublisher(request,pk=None):
+    publisher = PublisherModel.objects.get(pk=pk)
+    form = PublisherForm(instance=publisher)
+    if request.method == 'GET':
+        return render(request, "publishers/edit/index.html",{"form":form})
+    if request.method == 'POST':
+        form = PublisherForm(request.POST or None,instance=publisher)
+        if form.is_valid():
+            form.save()
+            return Response({'status': "Done"})
+        return Response({'status': "invalid Form"})
+            # return redirect("/book-ui/books-list/")
+    else:
+        return JsonResponse({"status": False, "message": "Invalid Request"})
+
+
+def download(request,filename):
+    return serve(request, filename,settings.MEDIA_ROOT)
+    return response
+
+@renderer_classes([JSONRenderer])
+# @api_view(['GET', 'POST', 'DELETE'])
+@csrf_exempt
+def listpublishers(request,pk=None):
+    if request.method == 'GET':
+        publisher= PublisherModel.objects.all()
+        return render(request, "publishers/index.html",{"publisher":publisher})
+    if request.method == 'DELETE':
+        if PublisherModel.objects.filter(pk=pk).delete():
+            print("Object Found")
+            return JsonResponse({"status":True,"message":"Book Successfully Deleted"})
+    else:
+        return JsonResponse({"status": False, "message": "Invalid Request"})

@@ -129,3 +129,9 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 STATIC_ROOT = path.normpath(path.join(SITE_ROOT, 'assets'))
 
 LOGIN_REDIRECT_URL ='/book-ui/books-list/'
+
+
+MEDIA_ROOT = path.normpath(path.join(SITE_ROOT, 'appserver/3dObjects'))
+print("MEDIA_ROOT",MEDIA_ROOT)
+# MEDIA_ROOT = '/3dObjects/'
+MEDIA_URL = '/3dObjects/'

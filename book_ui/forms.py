@@ -1,6 +1,6 @@
 #from django.forms import forms
 from .models import DemoModel
-from book_api.models import BookModel, PhrasesModel
+from book_api.models import BookModel, PhrasesModel, PublisherModel
 
 from django.forms import ModelForm
 
@@ -22,6 +22,21 @@ class Demoform(ModelForm):
 # from appserver.book_api.models import BookModel
 # from django.forms import ModelForm
 #
+
+class PublisherForm(ModelForm):
+    class Meta:
+        model = PublisherModel
+        fields = ['name','descripton']
+
+        def __init__(self, *args, **kwargs):
+            super().__init__(*args, **kwargs)
+            self.fields["name"].widget.attrs.update(
+                {"placeholder": "Publisher Name", "class": "form-control"}
+            )
+            self.fields["descripton"].widget.attrs.update(
+                {"placeholder": "Description", "class": "form-control"}
+            )
+
 class PhraseForm(ModelForm):
     class Meta:
         model = PhrasesModel

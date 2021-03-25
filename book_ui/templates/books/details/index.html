@@ -15,7 +15,7 @@
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
               <li class="breadcrumb-item"><a href="#">Book</a></li>
-              <li class="breadcrumb-item active">Book 1 Details</li>
+              <li class="breadcrumb-item active">{{book.name}} Details</li>
             </ol>
           </div>
         </div>
@@ -78,7 +78,8 @@
                                         <span class="badge badge-success">Active</span>
                                     </td>
                                     <td class="project-actions text-right">
-                                        <a class="btn btn-primary btn-sm" href="details/">
+<!--                                        <a class="btn btn-primary btn-sm" href="/{{ phrase.object }}">-->
+                                            <a class="btn btn-primary btn-sm" href="/book-ui/{{phrase.object.name}}/ " download>
                                             <i class="fas fa-download">
                                             </i>
                                             Download Model
@@ -106,16 +107,20 @@
             <div class="col-sm-4">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="text-primary mt-2"><i class="fas fa-paint-brush"></i> Book 1</h3>
+                        <h3 class="text-primary mt-2"><i class="fas fa-paint-brush"></i> {{book.name}}</h3>
                     </div>
                     <div class="card-body">
-                        <p class="text-muted">A sample description for this book.</p>
+
                         <div class="text-muted">
+
+                            <p class="text-sm">Description
+                            <b class="d-block">{{book.description}}</b>
+                            </p>
                             <p class="text-sm">Publisher
-                            <b class="d-block">WillyWonka Publishing House</b>
+                            <b class="d-block">{{book.publisher}}</b>
                             </p>
                             <p class="text-sm">Asignee
-                            <b class="d-block">Will Jordan</b>
+                            <b class="d-block">{{book.author}}</b>
                             </p>
                         </div>
                     </div>
