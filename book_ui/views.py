@@ -33,10 +33,10 @@ def lbooks(request,pk=None):
 
 
 def editbook(request,pk=None):
-    books = BookModel.objects.get(pk=pk)
-    form = BookForm(request.POST or None, instance=books)
+    book = BookModel.objects.get(pk=pk)
+    form = BookForm(request.POST or None, instance=book)
     if request.method == 'GET':
-        return render(request, "books/edit/index.html",{"form":form})
+        return render(request, "books/edit/index.html",{"form":form,"book":book})
     if request.method == 'POST':
         if form.is_valid():
             form.save()
@@ -94,6 +94,7 @@ def bookform(request):
 @csrf_exempt
 def listphrase(request,pk=None,bookid=None):
     if request.method == 'GET':
+        print("bookid",bookid)
         phrases= PhrasesModel.objects.filter(book__pk=bookid)
         return render(request, "books/details/index.html",{"phrases":phrases,"bookid":bookid})
     if request.method == 'DELETE':
@@ -120,10 +121,8 @@ def editphrase(request,pk=None,bookid=None):
     phrase = PhrasesModel.objects.get(pk=pk)
     if request.method == 'GET':
         form = PhraseForm(instance=phrase)
-        print("BOOKID",bookid)
         return render(request, "books/details/edit/index.html",{"form":form,"phrase":phrase,"bookid":bookid})
     if request.method == 'POST':
-        print("bookid",bookid)
         form = PhraseForm(request.POST or None, request.FILES, instance=phrase)
         if form.is_valid():
             if request.FILES['object']:
