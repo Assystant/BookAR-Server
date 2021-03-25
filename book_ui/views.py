@@ -119,10 +119,12 @@ def listphrase(request,pk=None,bookid=None):
 
 def editphrase(request,pk=None,bookid=None):
     phrase = PhrasesModel.objects.get(pk=pk)
+    print("out phrase", phrase)
     if request.method == 'GET':
         form = PhraseForm(instance=phrase)
         return render(request, "books/details/edit/index.html",{"form":form,"phrase":phrase,"bookid":bookid})
     if request.method == 'POST':
+        print("post phrase", phrase)
         form = PhraseForm(request.POST or None, request.FILES, instance=phrase)
         if form.is_valid():
             if request.FILES['object']:
