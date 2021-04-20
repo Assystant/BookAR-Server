@@ -15,13 +15,11 @@ class AuthorModel(TimeStampedModel):
     Stores a single Author entry, Extednding fromTimeStampedModel.
     """
 
-    name = models.CharField(max_length=100)
-    about = models.TextField(null=True, blank=True)
-    birth_date = models.DateField(null=True, blank=True)
-    death_date = models.DateField(null=True, blank=True)
-    author_image = models.ImageField(default="placeholder_author.png")
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100,null=True, blank=True)
+    author_image = models.ImageField(upload_to="Author_Image", blank=True, null=True)
 
-    def __str__(self):
+    def natural_key(self):
         return self.name
 
 
@@ -52,7 +50,7 @@ class BookModel(TimeStampedModel):
 
     name = models.CharField(max_length=100)
     published_date = models.DateField(null=True, blank=True)
-    book_cover = models.ImageField(default="placeholder_cover.png")
+    book_cover = models.ImageField(upload_to='Book_Cover',default="placeholder_cover.png", null=True, blank=True)
     description = models.TextField()
     ISBN = models.IntegerField(null=True, blank=True)
     author = models.ForeignKey(AuthorModel, on_delete=models.SET_NULL, null=True, blank=True)
@@ -74,18 +72,19 @@ class PhrasesModel(TimeStampedModel):
         (STATUS_SUSPENDED, 'Inactive'),
 
     )
+    trigger = models.ImageField(upload_to='trigger_image/')
     status = models.CharField(
         "Status Type", choices=STATUS_CHOICES, max_length=10,default=STATUS_ACTIVE)
     phrase = models.CharField(max_length=100)
     book = models.ForeignKey(BookModel, on_delete=models.CASCADE,related_name="phrases", null=True, blank=True)
-    object = models.FileField(upload_to='3dObjects/')
-                              # validators=[FileExtensionValidator(allowed_extensions=['obj', 'fbx'])])#it might cause
+    object = models.FileField(upload_to='phrases_object/',null=True, blank=True,
+                              validators=[FileExtensionValidator(allowed_extensions=['obj', 'fbx', 'mp3', 'wav', 'jpg', 'png', 'mp4','mkv', 'flv', 'avi', 'm4v', 'm4p '])])#it might cause
                                                                                                     #issues with serializers
     def __str__(self):
         return str(self.phrase)
 
 
 class ContentModel(TimeStampedModel):
-    object = models.FileField(upload_to = '3dObjects/',validators=[FileExtensionValidator(allowed_extensions=['obj','fbx'])])
+    object = models.FileField(upload_to = 'phrases_object/',null=True, blank=True,validators=[FileExtensionValidator(allowed_extensions=['obj','fbx'])])
     phrase = models.ForeignKey(PhrasesModel, on_delete=models.CASCADE,related_name="content_phrases", null=True, blank=True)
 

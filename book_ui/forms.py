@@ -1,6 +1,6 @@
 #from django.forms import forms
 from .models import DemoModel
-from book_api.models import BookModel, PhrasesModel, PublisherModel
+from book_api.models import BookModel, PhrasesModel, PublisherModel, AuthorModel
 
 from django.forms import ModelForm
 
@@ -28,19 +28,40 @@ class PublisherForm(ModelForm):
         model = PublisherModel
         fields = ['name','descripton']
 
-        def __init__(self, *args, **kwargs):
-            super().__init__(*args, **kwargs)
-            self.fields["name"].widget.attrs.update(
-                {"placeholder": "Publisher Name", "class": "form-control"}
-            )
-            self.fields["descripton"].widget.attrs.update(
-                {"placeholder": "Description", "class": "form-control"}
-            )
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["name"].widget.attrs.update(
+            {"placeholder": "Publisher Name", "class": "form-control"}
+        )
+        self.fields["descripton"].widget.attrs.update(
+            {"placeholder": "Description", "class": "form-control"}
+        )
+
+
+
+class AuthorForm(ModelForm):
+    class Meta:
+        model = AuthorModel
+        fields = ['first_name','last_name','author_image']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["first_name"].widget.attrs.update(
+            {"placeholder": "First Name", "class": "form-control"}
+        )
+        self.fields["last_name"].widget.attrs.update(
+            {"placeholder": "Last Name", "class": "form-control"}
+        )
+        self.fields["author_image"].widget.attrs.update(
+            {"placeholder": "Author Image"}
+        )
+
+
 
 class PhraseForm(ModelForm):
     class Meta:
         model = PhrasesModel
-        fields = ['phrase','book','object','status']
+        fields = ['phrase','book','trigger','object','status']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -54,14 +75,17 @@ class PhraseForm(ModelForm):
             {"placeholder": "Book", "class": "form-control"}
         )
         self.fields["object"].widget.attrs.update(
-            {"placeholder": "3dObject", "class": "form-control","required":"false"}
+            {"placeholder": "3dObject", "class":"form-control","id":"customFile"}
+        )
+        self.fields["trigger"].widget.attrs.update(
+            {"placeholder": "Trigger", "class":"custom-file-input", "id":"customFile"}
         )
 
 
 class BookForm(ModelForm):
     class Meta:
         model = BookModel
-        fields = ['name','description','author','publisher','status']
+        fields = ['name','description','book_cover','author','publisher','status']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -70,6 +94,9 @@ class BookForm(ModelForm):
         )
         self.fields["description"].widget.attrs.update(
             {"placeholder": "Description", "class": "form-control"}
+        )
+        self.fields["book_cover"].widget.attrs.update(
+            {"placeholder": "Book Cover", "class": "form-control"}
         )
         self.fields["author"].widget.attrs.update(
             {"placeholder": "Author", "class": "form-control"}

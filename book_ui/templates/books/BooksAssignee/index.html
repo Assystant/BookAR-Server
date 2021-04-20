@@ -8,8 +8,9 @@
         <div class="row mb-2">
           <div class="col-sm-6 d-flex align-items-center">
             <h1>Books </h1>
+              {% if perms.poll.change_poll %}
             <a href="add/" class="btn btn-sm btn-circle btn-primary btn-fab ml-3"><i class="fa fa-plus"></i></a>
-            
+                {% endif %}
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -93,6 +94,7 @@
                               </i>
                               View
                           </a>
+                          {% if perms.poll.change_poll %}
                           <a class="btn btn-info btn-sm" href="edit/">
                               <i class="fas fa-pencil-alt">
                               </i>
@@ -103,6 +105,7 @@
                               </i>
                               Delete
                           </a>
+                          {% endif %}
                       </td>
                   </tr>
                   

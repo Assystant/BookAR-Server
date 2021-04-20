@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
+
 <html>
 <head>
   <link rel="stylesheet" href="{% static 'plugins/toastr/toast.css' %}" />
@@ -40,10 +41,13 @@
       }
   </style>
 </head>
+{% if perms.poll.change_poll %}
 <body class="">
 <!-- Site wrapper -->
+
 <div class="wrapper">
   <!-- Navbar -->
+
   <nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
@@ -54,14 +58,19 @@
         <!-- <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a> -->
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="/book-ui/books-list/" class="nav-link active">Books</a>
+        <a href="/book-ui/books-list/" class="nav-link" id="book_navbar">Books</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="../authors" class="nav-link">Asignees</a>
+        <a href="/book-ui/author-list/" class="nav-link" id="author_navbar">Asignees</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="../publishers" class="nav-link">Publishers</a>
+        <a href="/book-ui/publisher-list/" class="nav-link" id="publisher_navbar">Publishers</a>
       </li>
+
+      <li class="nav-item d-none d-sm-inline-block">
+        <a href="/accounts/list_student/" class="nav-link " id="student_navbar">Students</a>
+      </li>
+
       <!-- <li class="nav-item d-none d-sm-inline-block">
         <a href="#" class="nav-link">Contact</a>
       </li> -->
@@ -115,5 +124,37 @@
 <script src="{% static 'dashboard/dist/js/demo.js' %} "></script>
 <script src="{% static 'plugins/skyjs/skyajax.js' %}"></script>
 <script src="{% static 'plugins/toastr/toast.js' %} "></script>
+<script type="text/javascript">
+$(function () {
+        $('nav li a').filter(function () {
+            return this.href === location.href;
+        }).addClass('active');
+    });
+</script>
+
+{% else %}
+<div class=" hold-transition login-page">
+  <div class="login-logo">
+    <p ><b>Book</b>AR</p>
+  </div>
+  <!-- /.login-logo -->
+  <div class="card">
+    <div class="card-body login-card-body">
+      <p class="login-box-msg">Permission Denied</p>
+          <div class="row">
+            <div class="col-md-12">
+                  <div class="form-group">
+                    <p>You are not allowed to view this page .Please  <a href="{% url 'account:logout' %}">sign in</a> with the admin credentialsnow.</p>
+                  </div>
+            </div>
+          </div>
+
+    <!-- /.content -->
+    </p>
+    </div>
+    <!-- /.login-card-body -->
+  </div>
+</div>
 </body>
 </html>
+{% endif %}

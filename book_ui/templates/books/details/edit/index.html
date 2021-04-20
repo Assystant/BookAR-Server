@@ -1,19 +1,20 @@
 {% extends "root.html" %}
+{% load static %}
 {% block body %}
 
 
     <!-- Content Header (Page header) -->
-    <section class="content-header pt-4">
+    <section class="content-header pt-4" >
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Book Edit</h1>
+            <h1>Phrase Edit</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
               <li class="breadcrumb-item"><a href="#">Book</a></li>
-              <li class="breadcrumb-item active">Edit Book 1</li>
+              <li class="breadcrumb-item active">Edit {{form.phrase.value}}</li>
             </ol>
           </div>
         </div>
@@ -26,7 +27,7 @@
         <div class="col-md-12">
           <div class="card card-primary">
             <div class="card-header">
-              <h3 class="card-title">Book Details</h3>
+              <h3 class="card-title">Pharse Details</h3>
               <div class="card-tools">
                 <!-- <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
                   <i class="fas fa-minus"></i></button> -->
@@ -37,7 +38,14 @@
                   {% csrf_token %} {% for field in form %}
                   <div class="form-group">
                       <label for="{{ field.auto_id }}">{{ field.label_tag }}</label>
-                      {{ field }}
+                        {{ field }}
+<!--                      {{ field.label_tag }}-->
+                      {% if field.name == "trigger" %}
+
+<!--                            {{field.label_tag.a_tag}}-->
+                        <h4>Preview</h4>
+                        <img src="" height="100px" widht="100px" id="output">
+                      {% endif %}
                   </div>
                   {% endfor %}
                  <div class="row mb-4">
@@ -53,7 +61,7 @@
           <!-- /.card -->
         </div>
       </div>
-
+      </div>
 
 
 
@@ -61,7 +69,33 @@
 <!--          {{ form.as_table }}-->
 <!--          <input type="submit" value="Submit"/>-->
 <!--      </form>-->
+
     </section>
-    <!-- /.content -->
+<!-- jQuery -->
+<script src="{% static 'dashboard/plugins/jquery/jquery.min.js' %} "></script>
+<script type="text/javascript">
+$(function () {
+    var output = document.getElementById('output');
+    output.src = document.getElementsByClassName("form-group")[2].querySelector('a').href;
+    output.onload = function() {
+      URL.revokeObjectURL(output.src) // free memory
+    }
+    });
+<!--  var loadFile = function(event) {-->
+<!--    var output = document.getElementById('output');-->
+<!--    output.src = URL.createObjectURL(event.target.files[0]);-->
+<!--    output.onload = function() {-->
+<!--      URL.revokeObjectURL(output.src) // free memory-->
+<!--    }-->
+<!--  };-->
+
+$("#id_trigger").change( function (event) {
+    var output = document.getElementById('output');
+    output.src = URL.createObjectURL(event.target.files[0]);
+    output.onload = function() {
+      URL.revokeObjectURL(output.src) // free memory
+    }
+});
+</script>
 
 {% endblock body %}

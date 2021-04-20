@@ -1,0 +1,30 @@
+{% extends  'base.html' %}
+
+{% load static %}
+{% block body %}
+<div class="login-box">
+  <!-- /.login-logo -->
+  <div class="">
+     <section class="content">
+        <h1 class="headline text-warning" style="text-align:center"> 404</h1>
+
+        <div class="error-content">
+          <h3><i class="fas fa-exclamation-triangle text-warning"></i> Oops! Page not found.</h3>
+
+          <p>
+            We could not find the page you were looking for.
+            Meanwhile, you may <a href="{% url 'book-ui:ui-book-list' %}">return to dashboard</a> or try using the search form.
+          </p>
+        </div>
+        <!-- /.error-content -->
+      <!-- /.error-page -->
+    </section>
+
+    <!-- /.content -->
+    </p>
+    </div>
+    <!-- /.login-card-body -->
+  </div>
+</div>
+
+{% endblock body %}

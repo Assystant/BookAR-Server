@@ -1,18 +1,42 @@
-<!doctype  html>
-<html  lang="en">
+<!DOCTYPE html>
+{% load static %}
+<html>
 <head>
-<link  rel="stylesheet"  href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"  integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"  crossorigin="anonymous">
-<title>Django Authentication Example</title>
+  <link rel="stylesheet" href="{% static 'plugins/toastr/toast.css' %}" />
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Book AR | Books</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="{% static 'dashboard/plugins/fontawesome-free/css/all.min.css' %} ">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="{% static 'dashboard/dist/css/adminlte.min.css' %} ">
+  <!-- Google Font: Source Sans Pro -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
-<body>
-  <div  class="container">
-    <div  class="row justify-content-center">
-      <div  class="col-4">
-      <h2  class="text-center">Book AR</h2>
-      {% block main %}
-      {% endblock %}
-      </div>
-    </div>
-  </div>
+<body class="hold-transition login-page">
+
+    {% block body %}
+
+    {% endblock body %}
+
+<!-- /.login-box -->
+
+<!-- jQuery -->
+
+<!-- jQuery -->
+<script src="{% static 'dashboard/plugins/jquery/jquery.min.js' %} "></script>
+<!-- Bootstrap 4 -->
+<script src="{% static 'dashboard/plugins/bootstrap/js/bootstrap.bundle.min.js' %} "></script>
+<!-- AdminLTE App -->
+<script src="{% static 'dashboard/dist/js/adminlte.min.js' %} "></script>
+<!-- AdminLTE for demo purposes -->
+<script src="{% static 'dashboard/dist/js/demo.js' %} "></script>
+<script src="{% static 'plugins/skyjs/skyajax.js' %}"></script>
+<script src="{% static 'plugins/toastr/toast.js' %} "></script>
 </body>
 </html>

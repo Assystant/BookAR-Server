@@ -1,5 +1,6 @@
 {% extends "root.html" %}
 {% block body %}
+{% load static %}
     <!-- Content Header (Page header) -->
     <section class="content-header pt-4">
       <div class="container-fluid">
@@ -20,7 +21,7 @@
 
     <!-- Main content -->
     <section class="content">
-      <form action="#" method="POST"> {% csrf_token %}
+      <form action="#" method="POST" enctype='multipart/form-data'> {% csrf_token %}
         <div class="row">
           <div class="col-md-12">
             <div class="card card-primary">
@@ -39,6 +40,10 @@
                 <div class="form-group">
                   <label for="inputDescription">Book Description</label>
                   <textarea id="inputDescription" class="form-control" rows="4" name="description" required id="id_description"></textarea>
+                </div>
+                <div class="custom-file">
+                  <input name="book_cover"  type="file" accept="image/*" id="id_book_cover" class="custom-file-input"  required >
+                  <label class="custom-file-label" for="id_book_cover" id="custom-file-label">Book Cover:</label>
                 </div>
                 <div class="form-group">
                   <label for="inputStatus">Status</label>
@@ -64,7 +69,7 @@
                   <select class="form-control custom-select" name="author" id="id_author">
                       <option selected disabled>Select one</option>
                       {% for author in authors %}
-                        <option  value ="{{ author.id }}">{{ author.name }}</option>
+                        <option  value ="{{ author.id }}">{{ author.first_name }} {{ author.last_name }}</option>
                       {% endfor %}
                     </select>
                 </div>
@@ -83,6 +88,12 @@
       </form>
     </section>
     <!-- /.content -->
-
+<script src="{% static 'dashboard/plugins/jquery/jquery.min.js' %} "></script>
+<script>
+  $(".custom-file-input").on("change", function() {
+  var fileName = $(this).val().split("\\").pop();
+  $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+});
+</script>
 
  {% endblock body %}

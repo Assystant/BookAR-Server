@@ -10,9 +10,9 @@
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item"><a href="#">Book</a></li>
-              <li class="breadcrumb-item"><a href="#">Book 1</a></li>
+              <li class="breadcrumb-item"><a href="{% url 'book-ui:ui-book-list' %}">Home</a></li>
+              <li class="breadcrumb-item"><a href="{% url 'book-ui:ui-book-list' %}">Books</a></li>
+              <li class="breadcrumb-item"><a href="{% url 'book-ui:ui-book-publisher-list' %}">Publishers</a></li>
               <li class="breadcrumb-item active">Add Phrase</li>
             </ol>
           </div>
@@ -52,7 +52,7 @@
       <div class="row mb-4">
         <div class="col-12">
           <a href="/book-ui/{{bookid}}/phrase-list/" class="btn btn-secondary">Cancel</a>
-          <input type="submit" value="Add Phrase" class="btn btn-success float-right">
+          <input type="submit" value="Add Publisher" class="btn btn-success float-right">
         </div>
       </div>
       </form>

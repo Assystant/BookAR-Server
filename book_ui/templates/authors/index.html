@@ -8,8 +8,9 @@
         <div class="row mb-2">
           <div class="col-sm-6 d-flex align-items-center">
             <h1>Asignees </h1>
-            <a href="add/" class="btn btn-sm btn-circle btn-primary btn-fab ml-3"><i class="fa fa-plus"></i></a>
-            
+              {% if perms.poll.change_poll %}
+            <a href="/book-ui/author-add/" class="btn btn-sm btn-circle btn-primary btn-fab ml-3"><i class="fa fa-plus"></i></a>
+                {% endif %}
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -54,17 +55,20 @@
                   </tr>
               </thead>
               <tbody>
+              {% for instance in authors %}
                   <tr>
                       <td>
                           #
                       </td>
                       <td>
                           <a>
-                              Will
+                              {{instance.first_name}}
                           </a>
                       </td>
                       <td>
-                          <a>Jordan</a>
+                          <a>
+                              {{instance.last_name}}
+                          </a>
                       </td>
                       <td class="project-actions text-right">
                           <!-- <a class="btn btn-primary btn-sm" href="details/">
@@ -72,19 +76,22 @@
                               </i>
                               View
                           </a> -->
-                          <a class="btn btn-info btn-sm" href="edit/">
+                          {% if perms.poll.change_poll %}
+                          <a class="btn btn-info btn-sm" href="/book-ui/author-edit/{{instance.id}}/">
                               <i class="fas fa-pencil-alt">
                               </i>
                               Edit
                           </a>
-                          <a class="btn btn-danger btn-sm" href="#">
+
+                          <a class="btn btn-danger btn-sm sky-rowdel" href="/book-ui/author-list/{{instance.id}}/">
                               <i class="fas fa-trash">
                               </i>
                               Delete
                           </a>
+                          {% endif %}
                       </td>
                   </tr>
-                  
+              {%endfor %}
               </tbody>
           </table>
         </div>

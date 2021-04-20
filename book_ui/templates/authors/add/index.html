@@ -1,6 +1,6 @@
 {% extends "root.html" %}
 {% block body %}
-
+{% load static %}
     <!-- Content Header (Page header) -->
     <section class="content-header pt-4">
       <div class="container-fluid">
@@ -11,7 +11,7 @@
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item"><a href="#">Asignee</a></li>
+              <li class="breadcrumb-item"><a href="{% url 'book-ui:ui-book-author-list' %}">Asignee's List</a></li>
               <li class="breadcrumb-item active">Add</li>
             </ol>
           </div>
@@ -21,6 +21,7 @@
 
     <!-- Main content -->
     <section class="content">
+      <form action="#" method="POST"> {% csrf_token %}
       <div class="row">
         <div class="col-md-12">
           <div class="card card-primary">
@@ -34,26 +35,45 @@
             <div class="card-body">
               <div class="form-group">
                 <label for="inputName">First Name</label>
-                <input type="text" id="inputName" class="form-control" value="">
+                <input type="text" id="inputName" class="form-control" name="first_name"value="">
               </div>
               <div class="form-group">
                 <label for="inputName">Last Name</label>
-                <input type="text" id="inputName2" class="form-control" value="">
+                <input type="text" id="inputName2" class="form-control" name="last_name" value="">
+              </div>
+              <div class="form-group">
+                <label for="TriggerFile">Author image:</label>
+
+                <div class="custom-file">
+                  <input name="author_image"  type="file" accept="image/*"  class="custom-file-input" id="id_author_image" required >
+                  <label class="custom-file-label" for="customFile" id="custom-file-label">Choose Author Image</label>
+
+                </div>
               </div>
             </div>
+
+            </div>
+
             <!-- /.card-body -->
+            <div class="row mb-4">
+              <div class="col-12">
+                <a href="#" class="btn btn-secondary">Cancel</a>
+                <input type="submit" value="Add Asignee" class="btn btn-success float-right">
+              </div>
+            </div>`
           </div>
           <!-- /.card -->
         </div>
       </div>
-      <div class="row mb-4">
-        <div class="col-12">
-          <a href="#" class="btn btn-secondary">Cancel</a>
-          <input type="submit" value="Add Asignee" class="btn btn-success float-right">
-        </div>
-      </div>
+      </form>
     </section>
     <!-- /.content -->
-
+<script src="{% static 'dashboard/plugins/jquery/jquery.min.js' %} "></script>
+<script>
+  $(".custom-file-input").on("change", function() {
+  var fileName = $(this).val().split("\\").pop();
+  $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+});
+</script>
 
 {% endblock body %}

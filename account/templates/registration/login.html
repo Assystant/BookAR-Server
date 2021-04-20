@@ -1,18 +1,60 @@
 {% extends  'base.html' %}
-{% load crispy_forms_tags %}
 
-{% block main %}
-<div class="card">
-<div class="card-body">
+{% load static %}
+{% block body %}
+<style>
+  .container {
+  padding: 16px;
+}
 
+span.psw {
+  float: right;
+  padding-top: 16px;
+}
+</style>
+<div class="login-box">
+  <div class="login-logo">
+    <p ><b>Book</b>AR</p>
+  </div>
+  <!-- /.login-logo -->
+  <div class="card">
+    <div class="card-body login-card-body">
+      <p class="login-box-msg">Sign in to start your session</p>
 
-  <form method="post">
-{% csrf_token %}
-<input type="hidden" name="next" value="{{ next }}">
-    <h4  class="text-center">Sign To start your Session</h4>
-    {{ form|crispy }}
-    <button type="submit" class="btn btn-primary btn-block">Log in</button>
-</form>
+        <form  method="POST"> {% csrf_token %}
+          <div class="row">
+            <div class="col-md-12">
+        <!--              <div class="card card-primary">-->
+        <!--                <div class="card-body">-->
+                  <div class="form-group">
+                    <label for="inputName">Username</label>
+        <!--                  <input type="text"  name="name" maxlength="100" required id="id_name" class="form-control" value="">-->
+                    <input type="text" name="username" autofocus autocapitalize="none" autocomplete="username" maxlength="150" class="textinput textInput form-control" required id="id_username" class="form-control">
+                  </div>
+                  <div class="form-group">
+                    <label for="inputDescription">Password</label>
+        <!--                  <textarea id="inputDescription" class="form-control" rows="4" name="description" required id="id_description"></textarea>-->
+                    <input type="password" name="password" autocomplete="current-password" class="textinput textInput form-control" required id="id_password" class="form-control">
+                  </div>
+        <!--                </div>-->
+                <!-- /.card-body -->
+        <!--              </div>-->
+              <!-- /.card -->
+            </div>
+          </div>
+          <div class="row mb-4">
+            <div class="col-12">
+              <input type="submit" value="Login" class="btn btn-primary float-left">
+              <span class="psw"><a href="{% url 'account:password_reset' %}">Forgot password?</a></span>
+            </div>
+          </div>
+        </form>
+
+    <!-- /.content -->
+    </p>
+    </div>
+    <!-- /.login-card-body -->
+  </div>
 </div>
-</div>
-{% endblock %}
+
+{% endblock body %}

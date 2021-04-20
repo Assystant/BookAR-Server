@@ -7,8 +7,9 @@
         <div class="row mb-2">
           <div class="col-sm-6 d-flex align-items-center">
             <h1>Books </h1>
+              {% if perms.poll.change_poll %}
             <a href="/book-ui/bookform/" class="btn btn-sm btn-circle btn-primary btn-fab ml-3"><i class="fa fa-plus"></i></a>
-            
+              {% endif %}
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -76,8 +77,8 @@
                       <td>
                           <ul class="list-inline">
                               <li class="list-inline-item d-flex align-items-center">
-                                  <img alt="Avatar" class="table-avatar" src="../../dist/img/avatar.png">
-                                  <p class="mb-0 ml-2 small">Will Jordan</p>
+                                  <img alt="Avatar" class="table-avatar" src="{{ instance.book_cover.url }}">
+                                  <p class="mb-0 ml-2 small">{{instance.author.first_name}} {{instance.author.last_name}}</p>
                               </li>
                           </ul>
                       </td>
@@ -85,7 +86,7 @@
                           {{instance.publisher.name}}
                       </td>
                       <td class="project-state">
-                          <span class="badge badge-success">{{instance.status}}</span>
+                          <a class="badge badge-success" href="/accounts/book_state_change/{{ instance.id }}/">{{instance.status}}</a>
                       </td>
                       <td class="project-actions text-right">
                           <a class="btn btn-primary btn-sm" href="/book-ui/{{ instance.id }}/phrase-list/">
@@ -93,7 +94,12 @@
                               </i>
                               View
                           </a>
-
+                          <a class="btn btn-primary btn-sm" href="/book-ui/book-download/{{ instance.id }}/ " download>
+                              <i class="fas fa-download">
+                              </i>
+                              Download Book
+                          </a>
+                          {% if perms.poll.change_poll %}
                           <a class="btn btn-info btn-sm" href="/book-ui/book-edit/{{ instance.id }}/">
                               <i class="fas fa-pencil-alt">
                               </i>
@@ -104,6 +110,7 @@
                               </i>
                               Delete
                           </a>
+                          {%endif%}
                       </td>
                   </tr>
               {% endfor %}

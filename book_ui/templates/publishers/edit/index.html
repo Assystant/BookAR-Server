@@ -11,9 +11,9 @@
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item"><a href="#">Book</a></li>
-              <li class="breadcrumb-item active">Publisher edit</li>
+              <li class="breadcrumb-item"><a href="{% url 'book-ui:ui-book-list' %}">Books</a></li>
+              <li class="breadcrumb-item"><a href="{% url 'book-ui:ui-book-publisher-list' %}">Publishers</a></li>
+              <li class="breadcrumb-item active">Edit {{form.name.value}}</li>
             </ol>
           </div>
         </div>
@@ -36,7 +36,7 @@
               <form action="" method="POST" autocomplete="off" class="" >
                   {% csrf_token %} {% for field in form %}
                   <div class="form-group">
-                      <label for="{{ field.auto_id }}">{{ field.label_tag }}</label>
+                      <label for="{{ field.auto_id }}" >{{ field.label_tag }}</label>
                       {{ field }}
                   </div>
                   {% endfor %}

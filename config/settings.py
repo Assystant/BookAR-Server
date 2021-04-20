@@ -26,6 +26,7 @@ SECRET_KEY = 'phafrv7le-xi692(eun)6*nhe7950$&n^d^--$o)-8ylyssnz-'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+
 ALLOWED_HOSTS = ["*"]
 
 
@@ -38,7 +39,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.admindocs',
+    #'django.contrib.admindocs ',
     'rest_framework',
+'rest_framework.authtoken',
+    'rest_framework_swagger',
     'account',
     'crispy_forms',
     'book_api',
@@ -129,9 +134,19 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 STATIC_ROOT = path.normpath(path.join(SITE_ROOT, 'assets'))
 
 LOGIN_REDIRECT_URL ='/book-ui/books-list/'
+LOGOUT_REDIRECT_URL ='/accounts/login/'
 
-
-MEDIA_ROOT = path.normpath(path.join(SITE_ROOT, 'appserver/3dObjects'))
-print("MEDIA_ROOT",MEDIA_ROOT)
+MEDIA_ROOT = path.normpath(path.join(SITE_ROOT, 'appserver/media'))
 # MEDIA_ROOT = '/3dObjects/'
-MEDIA_URL = '/3dObjects/'
+MEDIA_URL = '/media/'
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 10,
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema' ,
+        'DEFAULT_AUTHENTICATION_CLASSES': [
+            'rest_framework.authentication.SessionAuthentication',
+            'rest_framework.authentication.TokenAuthentication',  # <-- And here
+        ],
+}
+#Email
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

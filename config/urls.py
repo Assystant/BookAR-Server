@@ -15,10 +15,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-
+from rest_framework_swagger.views import get_swagger_view
+schema_view = get_swagger_view(title='API docs')
+from django.contrib.staticfiles.urls import static,staticfiles_urlpatterns
+from django.conf import settings
+handler404 = 'account.views.error_404_view'
 urlpatterns = [
+    path('docs/', schema_view),
+    path('admin/doc/', include('django.contrib.admindocs.urls')),
     path('admin/', admin.site.urls),
     path('accounts/', include('account.urls')),
-    # path('book-api/', include('book_api.urls')),
+    path('book-api/', include('book_api.urls')),
     path('book-ui/', include('book_ui.urls')),
+    path('', include('account.urls')),
 ]
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

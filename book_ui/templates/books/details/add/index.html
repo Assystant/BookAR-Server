@@ -1,5 +1,16 @@
 {% extends "root.html" %}
 {% block body %}
+{% load static %}
+<style>
+#testting{
+height: 100px;
+width: 100px;
+}
+#output{
+max-width:150px;
+max-height:150px;
+}
+</style>
 
     <!-- Content Header (Page header) -->
     <section class="content-header pt-4">
@@ -10,9 +21,8 @@
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item"><a href="#">Book</a></li>
-              <li class="breadcrumb-item"><a href="#">Book 1</a></li>
+              <li class="breadcrumb-item"><a href="{% url 'book-ui:ui-book-list' %}">Books</a></li>
+              <li class="breadcrumb-item"><a href="/book-ui/{{book.id}}/phrase-list/">Book 1</a></li>
               <li class="breadcrumb-item active">Add Phrase</li>
             </ol>
           </div>
@@ -33,6 +43,8 @@
                   <i class="fas fa-minus"></i></button> -->
               </div>
             </div>
+            <div class="form-group">
+
             <div class="card-body">
 
                 <div class="form-group">
@@ -50,17 +62,31 @@
                 </div>
               <div class="form-group">
                   <label for="id_publisher">Book</label>
-                <input type="text"   name="book" class="form-control" value="{{ book.id }}" readonly>
+                <input type="hidden"   name="book" class="form-control" value="{{ book.id }}" readonly>
+                <input type="text" id="id_publisher" class="form-control" value="{{ book.name }}" readonly disabled>
                 </div>
                 <div class="form-group">
-                  <label for="customFile">3D Model/ .obj/ .fbx</label>
+                  <label for="customFile">3D Model/ .obj/ .fbx/ .mp4/ .jpg/ .png/</label>
 
                   <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="customFile" name="object">
-                    <label class="custom-file-label" for="customFile">Choose file</label>
+                    <input name="object"  type="file" class="custom-file-input" id="customFile" >
+                    <label class="custom-file-label" id="objectLabel" for="customFile">Choose file</label>
                   </div>
                 </div>
+              <div class="form-group">
+                <label for="TriggerFile">Trigger</label>
 
+                <div class="custom-file">
+                  <input name="trigger"  type="file" accept="image/*" onchange="loadFile(event)" class="custom-file-input" id="TriggerFile" required >
+                  <label class="custom-file-label" for="customFile" id="fileLabel">Choose Trigger Image</label>
+
+                </div>
+              </div>
+              <div id ="testting">
+                <img id="output"  />
+              </div>
+
+              </div>
             </div>
             <!-- /.card-body -->
           </div>
@@ -69,11 +95,50 @@
       </div>
       <div class="row mb-4">
         <div class="col-12">
-          <a href="/book-ui/{{bookid}}/phrase-list/" class="btn btn-secondary">Cancel</a>
+          <a href="/book-ui/{{book.id}}/phrase-list/" class="btn btn-secondary">Cancel</a>
           <input type="submit" value="Add Phrase" class="btn btn-success float-right">
         </div>
       </div>
       </form>
     </section>
+<script src="{% static 'dashboard/plugins/jquery/jquery.min.js' %} "></script>
+<script>
+  var loadFile = function(event) {
+    var output = document.getElementById('output');
+    output.src = URL.createObjectURL(event.target.files[0]);
+    output.onload = function() {
+      URL.revokeObjectURL(output.src) // free memory
+    }
+<!--   var a = document.getElementById('TriggerFile');-->
+<!--    if(a.value == "")-->
+<!--    {-->
+<!--        fileLabel.innerHTML = "Choose file";-->
+<!--    }-->
+<!--    else-->
+<!--    {-->
+<!--        var theSplit = a.value.split('\\');-->
+<!--        fileLabel.innerHTML = theSplit[theSplit.length-1];-->
+<!--    }-->
+  };
+
+<!--  var loadName = function(event) {-->
+<!--   var a = document.getElementById('customFile');-->
+<!--    if(a.value == "")-->
+<!--    {-->
+<!--        objectLabel.innerHTML = "Choose file";-->
+<!--    }-->
+<!--    else-->
+<!--    {-->
+<!--        var theSplit = a.value.split('\\');-->
+<!--        objectLabel.innerHTML = theSplit[theSplit.length-1];-->
+<!--    }-->
+<!--  };-->
+
+  $(".custom-file-input").on("change", function() {
+  var fileName = $(this).val().split("\\").pop();
+  $(this).siblings(".custom-file-label").addClass("selected").text(fileName);
+});
+
+</script>
     <!-- /.content -->
 {% endblock body %}
