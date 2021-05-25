@@ -17,7 +17,7 @@ class AuthorModel(TimeStampedModel):
 
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100,null=True, blank=True)
-    author_image = models.ImageField(upload_to="Author_Image", null=True)
+    author_image = models.ImageField(upload_to="Author_Image", null=True, blank=True)
 
     def natural_key(self):
         return self.name

@@ -371,7 +371,7 @@ def addauthor(request):
     """
     form = AuthorForm(request.POST or None)
     if request.method == 'POST':
-        print("clear Form",form)
+        form = AuthorForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             #return  render(request,'demoform.html')
