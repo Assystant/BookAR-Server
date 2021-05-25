@@ -17,7 +17,7 @@ class AuthorModel(TimeStampedModel):
 
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100,null=True, blank=True)
-    author_image = models.ImageField(upload_to="Author_Image", blank=True, null=True)
+    author_image = models.ImageField(upload_to="Author_Image", null=True)
 
     def natural_key(self):
         return self.name
@@ -50,7 +50,7 @@ class BookModel(TimeStampedModel):
 
     name = models.CharField(max_length=100)
     published_date = models.DateField(null=True, blank=True)
-    book_cover = models.ImageField(upload_to='Book_Cover',default="placeholder_cover.png", null=True, blank=True)
+    book_cover = models.ImageField(upload_to='Book_Cover',default="placeholder_cover.png", null=True)
     description = models.TextField()
     ISBN = models.IntegerField(null=True, blank=True)
     author = models.ForeignKey(AuthorModel, on_delete=models.SET_NULL, null=True, blank=True)
