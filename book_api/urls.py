@@ -7,6 +7,10 @@ from rest_framework_extensions.routers import NestedRouterMixin
 
 
 class NestedSimpleRouter(NestedRouterMixin, routers.SimpleRouter):
+    """
+    A router class that extends both NestedRouterMixin and SimpleRouter.
+    This allows for nested routing, where child routes can be nested under parent routes.
+    """
     pass
 router = NestedSimpleRouter()
 (
@@ -28,7 +32,6 @@ router = NestedSimpleRouter()
 router.register(r'student', views.StudentAPIViewset)
 router.register(r'author', views.AuthorAPIViewset)
 router.register(r'publishers', views.PublisherAPIViewset)
-
 
 urlpatterns = [
 
